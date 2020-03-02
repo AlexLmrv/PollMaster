@@ -9,5 +9,5 @@ import java.util.List;
 public interface QuestionRepo extends CrudRepository<Question, Integer> {
 
     List<Question> findAll();
-    List<Question> findByPollnumber(Integer pollnumber);
+    List<Question> findByPollnumberOrderByQuestionnumber(Integer pollnumber);
 }

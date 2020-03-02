@@ -1,29 +1,32 @@
 package org.example.pollmaster.domain;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Calendar;
-import java.util.Date;
 
 @Entity
-public class Poll {
+@Table(name = "polls")
+public class Poll implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
 
     @NotEmpty
+    @Column(name = "name")
     private String name;
 
-    @NotEmpty
-    private Calendar startdate;
+    @Column(name = "startdate")
+    private LocalDateTime startdate;
 
-    private Calendar finishdate;
+    @Column(name = "finishdate")
+    private LocalDateTime finishdate;
 
+    @Column(name = "active")
     private Boolean active;
 
     public Poll() {
@@ -31,7 +34,7 @@ public class Poll {
 
     public Poll(String name){
         this.name = name;
-        this.startdate = Calendar.getInstance();
+        this.startdate = LocalDateTime.now();
         this.active = true;
     }
 
@@ -51,19 +54,19 @@ public class Poll {
         this.name = name;
     }
 
-    public Calendar getStartdate() {
+    public LocalDateTime getStartdate() {
         return startdate;
     }
 
-    public void setStartdate(Calendar startdate) {
+    public void setStartdate(LocalDateTime startdate) {
         this.startdate = startdate;
     }
 
-    public Calendar getFinishdate() {
+    public LocalDateTime getFinishdate() {
         return finishdate;
     }
 
-    public void setFinishdate(Calendar finishdate) {
+    public void setFinishdate(LocalDateTime finishdate) {
         this.finishdate = finishdate;
     }
 

@@ -1,0 +1,100 @@
+databaseChangeLog:
+  - logicalFilePath: db/changelog/db.changelog-lesson1.yaml
+  - changeSet:
+      id: 1
+      author: pollmaster
+      changes:
+        - createTable:
+            tableName: polls
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(512)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: startdate
+                  type: timestamp
+              - column:
+                  name: finishdate
+                  type: timestamp
+              - column:
+                  name: active
+                  type: boolean
+
+        - changeSet:
+            id: 1
+            author: pollmaster
+            changes:
+              - createTable:
+                  tableName: polls
+                  columns:
+                    - column:
+                        name: id
+                        type: int
+                        autoIncrement: true
+                        constraints:
+                          primaryKey: true
+                          nullable: false
+                    - column:
+                        name: name
+                        type: varchar(512)
+                        constraints:
+                          nullable: false
+                    - column:
+                        name: startdate
+                        type: timestamp
+                    - column:
+                        name: finishdate
+                        type: timestamp
+                    - column:
+                        name: active
+                        type: boolean
+
+  - changeSet:
+      id: 2
+      author: pollmaster
+      changes:
+        - createTable:
+            tableName: questions
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: pollnumber
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: content
+                  type: varchar(2048)
+              - column:
+                  name: questionnumber
+                  type: int
+
+  - changeSet:
+      id: 3
+      author: pollmaster
+      comment: "init"
+      changes:
+        - insert:
+            tableName: polls
+            columns:
+              - column:
+                  name: name
+                  value: "firstpoll"
+              - column:
+                  name: active
+                  value: true
