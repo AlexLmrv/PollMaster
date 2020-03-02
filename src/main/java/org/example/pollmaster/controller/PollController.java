@@ -25,7 +25,7 @@ public class PollController {
     }
 
     @PostMapping
-    public Poll newEmployee(@RequestBody Poll newPoll) {
+    public Poll newPoll(@RequestBody Poll newPoll) {
         return pollService.savePoll(newPoll);
     }
 
