@@ -5,10 +5,7 @@ import org.example.pollmaster.domain.Poll;
 import org.example.pollmaster.repos.PollRepo;
 import org.example.pollmaster.service.PollService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,6 +23,24 @@ public class PollController {
     ){
         return pollService.getPolls(name, sorted);
     }
+
+    @PostMapping
+    public Poll newEmployee(@RequestBody Poll newPoll) {
+        return pollService.savePoll(newPoll);
+    }
+
+    @PutMapping("/{id}")
+    public Poll replacePoll(@RequestBody Poll newPoll, @PathVariable Integer id) {
+
+        return pollService.changePoll(newPoll, id);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deletePoll(@PathVariable Integer id) {
+        pollService.deletePoll(id);
+    }
+
+
 
 
 

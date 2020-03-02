@@ -5,6 +5,7 @@ import org.example.pollmaster.repos.PollRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -39,5 +40,30 @@ public class PollService {
 
             return pollRepo.findAll();
         }
+    }
+
+    public Poll savePoll(Poll newPoll) {
+        newPoll.setStartdate(LocalDateTime.now());
+        newPoll.setActive(true);
+        return pollRepo.save(newPoll);
+    }
+
+    public void deletePoll(Integer id) {
+        pollRepo.deleteById(id);
+    }
+
+    public Poll changePoll(Poll newPoll, Integer id) {
+        return pollRepo.findById(id)
+                .map(poll -> {
+                    poll.setName(newPoll.getName());
+                    poll.setStartdate(LocalDateTime.now());
+                    poll.setFinishdate(newPoll.getFinishdate());
+                    poll.setActive(newPoll.getActive());
+                    return pollRepo.save(newPoll);
+                })
+                .orElseGet(() -> {
+                    newPoll.setId(id);
+                    return pollRepo.save(newPoll);
+                });
     }
 }
