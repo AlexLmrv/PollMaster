@@ -58,10 +58,6 @@ public class PollService {
                     poll.setFinishdate(newPoll.getFinishdate());
                     poll.setActive(newPoll.getActive());
                     return pollRepo.save(poll);
-                }).get();/*
-                .orElseGet(() -> {
-                    newPoll.setId(id);
-                    return pollRepo.save(newPoll);
-                });*/
+                }).get();
     }
 }

@@ -2,10 +2,8 @@ package org.example.pollmaster.domain;
 
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Calendar;
 
 @Entity
 @Table(name = "polls")

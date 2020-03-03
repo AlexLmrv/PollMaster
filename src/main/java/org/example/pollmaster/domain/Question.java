@@ -2,7 +2,6 @@ package org.example.pollmaster.domain;
 
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "questions")

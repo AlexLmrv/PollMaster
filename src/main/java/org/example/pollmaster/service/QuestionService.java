@@ -33,7 +33,8 @@ public class QuestionService {
                         question -> {
                             question.setContent(newQuestion.getContent());
                             return questionRepo.save(question);
-                        }).get();
+                        })
+                        .get();
                 // заменяем поле content; позиция, принадлежность и id остаются прежними
 
     }
