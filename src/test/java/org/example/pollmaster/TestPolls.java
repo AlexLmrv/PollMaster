@@ -4,7 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.example.pollmaster.controller.PollController;
+import org.example.pollmaster.controller.QuestionController;
 import org.example.pollmaster.domain.Poll;
+import org.example.pollmaster.domain.Question;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -28,6 +31,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class TestPolls {
     @Autowired
     PollController pollController;
+    @Autowired
+    QuestionController questionController;
 
     @Autowired
     private MockMvc mockMvc;
@@ -45,16 +50,18 @@ public class TestPolls {
         Poll poll = new Poll();
         poll.setFinishdate(LocalDateTime.now().plusMonths(2L));
         poll.setActive(true);
-        poll.setName("testpoll1");
+        poll.setName("testpol"+UUID.randomUUID());
         this.mockMvc.perform(post("/polls")
                 .content(asJsonString(poll))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
                 .andExpect(status().isOk());
     }
 
+
     @Test
-    public void updatePolls() throws Exception{
+    public void updateFirstPoll() throws Exception{
         Poll poll = new Poll();
         poll.setStartdate(LocalDateTime.now());
         poll.setFinishdate(LocalDateTime.now().plusMonths(2L));
@@ -64,12 +71,16 @@ public class TestPolls {
                 .content(asJsonString(poll))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
                 .andExpect(status().isOk());
     }
 
     @Test
     public void deletePolls() throws Exception{
-        this.mockMvc.perform(delete("/polls/6")).andExpect(status().isOk());
+        //id удаляемого опроса задаётся вручную
+        this.mockMvc.perform(delete("/polls/6"))
+                .andDo(print())
+                .andExpect(status().isOk());
     }
 
     public static String asJsonString(final Object obj) {

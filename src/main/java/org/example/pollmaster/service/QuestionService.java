@@ -23,6 +23,7 @@ public class QuestionService {
 
     public Question saveQuestion(Question newQuestion, Integer pollnumber) {
         newQuestion.setQuestionnumber(questionRepo.findByPollnumberOrderByQuestionnumber(pollnumber).size());
+        newQuestion.setPollnumber(pollnumber);
         return questionRepo.save(newQuestion);
     }
 
@@ -49,8 +50,9 @@ public class QuestionService {
         // теперь элементы со старшей позицией необходимо сдвинуть влево
         questionRepo.findByPollnumberOrderByQuestionnumber(pollnumber).forEach(elem -> {
             if (elem.getQuestionnumber() > questionnumber){
-                elem.setQuestionnumber(question.getQuestionnumber() - 1);
+                elem.setQuestionnumber(elem.getQuestionnumber() - 1);
             }
+            questionRepo.save(elem);
         });
 
     }

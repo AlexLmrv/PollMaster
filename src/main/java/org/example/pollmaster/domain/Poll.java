@@ -16,7 +16,7 @@ public class Poll implements Serializable {
     @Column(name = "id")
     private Integer id;
 
-    @NotEmpty
+
     @Column(name = "name")
     private String name;
 

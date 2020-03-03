@@ -13,15 +13,15 @@ public class Question {
     @Column(name = "id")
     private Integer id;
 
-    @NotEmpty
+
     @Column(name = "pollnumber")
     private Integer pollnumber;
 
-    @NotEmpty
+
     @Column(name = "content")
     private String content;
 
-    @NotEmpty
+
     @Column(name = "questionnumber")
     private Integer questionnumber;
 
