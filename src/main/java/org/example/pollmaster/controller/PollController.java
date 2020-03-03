@@ -1,8 +1,6 @@
 package org.example.pollmaster.controller;
 
-import com.datical.liquibase.ext.license.LicenseCheckingSnapshotGenerator;
 import org.example.pollmaster.domain.Poll;
-import org.example.pollmaster.repos.PollRepo;
 import org.example.pollmaster.service.PollService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

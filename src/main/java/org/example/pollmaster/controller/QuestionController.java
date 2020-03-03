@@ -1,46 +1,53 @@
 package org.example.pollmaster.controller;
 
-import org.example.pollmaster.domain.Poll;
 import org.example.pollmaster.domain.Question;
-import org.example.pollmaster.service.PollService;
 import org.example.pollmaster.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
-@RequestMapping("/polls")
+@RestController
 public class QuestionController {
 
     @Autowired
     QuestionService questionService;
 
-    @GetMapping("/{pollnumber}")
-    public List<Question> allQuestions(@PathVariable Integer pollnumber
+
+    //получение списка вопросов конкретного опроса
+    @GetMapping("/poll/{pollnumber}")
+    public List<Question> pollQuestions(@PathVariable Integer pollnumber
     ){
         return questionService.getQuestions(pollnumber);
     }
 
-    @PostMapping
-    public Question newQuestion(@RequestBody Question newQuestion) {
-        return questionService.saveQuestion(newQuestion);
+    //создание вопроса для конкретного опроса
+    @PostMapping("/poll/{pollnumber}")
+    public Question newQuestion(
+            @RequestBody Question newQuestion,
+            @PathVariable Integer pollnumber) {
+        return questionService.saveQuestion(newQuestion, pollnumber);
     }
 
-    @PutMapping("/{poll_number}/{question_number}")
+    //получение всех вопросов
+    @GetMapping("/questions")
+    public List<Question> allQuestions(){
+        return questionService.getAllQuestions();
+    }
+
+
+
+    @PutMapping("/questions/{id}")
     public Question replaceQuestion(
             @RequestBody Question newQuestion,
-            @PathVariable("poll_number") Integer pollnumber,
-            @PathVariable("question_number") Integer questionnumber
+            @PathVariable Integer id
             ) {
 
-        return questionService.changeQuestion(newQuestion, pollnumber, questionnumber);
+        return questionService.changeQuestion(newQuestion, id);
     }
 
-    @DeleteMapping("/{poll_number}/{question_number}")
-    public void deleteQuestion( @PathVariable("poll_number") Integer pollnumber,
-                                @PathVariable("question_number") Integer questionnumber) {
-        questionService.deleteQuestion(pollnumber, questionnumber);
+    @DeleteMapping("/questions/{id}")
+    public void deleteQuestion( @PathVariable Integer id) {
+        questionService.deleteQuestion(id);
     }
 }
