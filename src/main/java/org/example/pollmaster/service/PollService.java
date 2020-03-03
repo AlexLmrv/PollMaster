@@ -47,8 +47,7 @@ public class PollService {
         return pollRepo.save(newPoll);
     }
 
-    public void deletePoll(Integer id) {
-        pollRepo.deleteById(id);
+    public void deletePoll(Integer id) {pollRepo.deleteById(id);
     }
 
     public Poll changePoll(Poll newPoll, Integer id) {
@@ -58,11 +57,11 @@ public class PollService {
                     poll.setStartdate(LocalDateTime.now());
                     poll.setFinishdate(newPoll.getFinishdate());
                     poll.setActive(newPoll.getActive());
-                    return pollRepo.save(newPoll);
-                })
+                    return pollRepo.save(poll);
+                }).get();/*
                 .orElseGet(() -> {
                     newPoll.setId(id);
                     return pollRepo.save(newPoll);
-                });
+                });*/
     }
 }

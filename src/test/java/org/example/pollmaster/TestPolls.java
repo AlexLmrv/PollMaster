@@ -17,8 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.time.LocalDateTime;
 
 import static org.hamcrest.Matchers.containsString;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -44,14 +43,33 @@ public class TestPolls {
     @Test
     public void sendPolls() throws Exception{
         Poll poll = new Poll();
-        //poll.setStartdate(LocalDateTime.now());
         poll.setFinishdate(LocalDateTime.now().plusMonths(2L));
         poll.setActive(true);
         poll.setName("testpoll1");
         this.mockMvc.perform(post("/polls")
                 .content(asJsonString(poll))
                 .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON));
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void updatePolls() throws Exception{
+        Poll poll = new Poll();
+        poll.setStartdate(LocalDateTime.now());
+        poll.setFinishdate(LocalDateTime.now().plusMonths(2L));
+        poll.setActive(true);
+        poll.setName("firstpoll000");
+        this.mockMvc.perform(put("/polls/1")
+                .content(asJsonString(poll))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void deletePolls() throws Exception{
+        this.mockMvc.perform(delete("/polls/6")).andExpect(status().isOk());
     }
 
     public static String asJsonString(final Object obj) {
