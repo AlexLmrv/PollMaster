@@ -1,0 +1,65 @@
+# PollMaster
+REST API сервис для управления опросами
+ - для запуска необходимо:
+   - в файле application.properties указать конфигурацию используемой базы данных, например:
+      - spring.datasource.url=jdbc:postgresql://localhost/myBase
+      - spring.datasource.username=admin
+      - spring.datasource.password=admin
+   - запустить WebApplication 
+      - Путь к .class:  target/classes/org/example/pollmaster/WebApplication.class
+      - Путь к .java:   src/main/java/org/example/pollmaster/WebApplication.java
+
+- Управление опросами:
+  -
+    - Получение всех опросов: 
+      - метод GET 
+      - URL "/polls"
+      - параметры:
+        - name: осуществляет поиск по имени опроса
+        - sorted: принимает значение name или date, осуществляет сортировку по имени или дате добавления        
+    - Добавление опроса: 
+      - метод POST 
+      - URL "/polls"
+      - тело запроса: объект типа Poll в JSON формате      
+    - Редактирование опроса с определённым id: 
+      - метод POST 
+      - URL "/polls/{id}"
+      - тело запроса: объект типа Poll в JSON формате      
+    - Удаление опроса с определённым id: 
+      - метод DELETE 
+      - URL "/polls/{id}"
+      
+- Управление вопросами опросов:
+  -
+    - Получение всех вопросов: 
+      - метод GET 
+      - URL "/questions"      
+    - Получение вопросов опроса id: 
+      - метод GET 
+      - URL "/poll/{id}"      
+    - Создание вопроса для  опроса id: 
+      - метод POST 
+      - URL "/poll/{id}"
+      - тело запроса: объект типа Question в JSON формате
+    - Редактирование dопроса с определённым id: 
+      - метод GET 
+      - URL "/questions/{id}" 
+      - тело запроса: объект типа Question в JSON формате
+    - Удаление dопроса с определённым id: 
+      - метод GET 
+      - URL "/questions/{id}"
+      
+- Тестирование:
+  - 
+- тесты для проверки функционала опросов и вопросов определены в классах TestPolls и TestQuestions соответственно
+  - TestPoll:
+    - getPolls() запрашивает все опросы;
+    - sendPolls() создаёт новый опрос с рандомным наименованием и датой окончания +2 месяца от текущей
+    - updateFirstPoll() редактирует опрос с id = 1
+    - deletePolls() удаляет опрос с определённым id
+  - TestQuestion:
+    - getAllQuestions() запрашивает все вопросы
+    - getFirstPollQuestions() запрашивает вопросы первого опроса
+    - sendFirstPollQuestion() создаёт новый вопрос в первом опросе
+    - changeFirstQuestion() редактирует вопрос с id = 1
+    - deleteQuestion() удаляет вопрос с определённым id
