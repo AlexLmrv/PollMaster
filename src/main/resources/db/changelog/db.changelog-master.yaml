@@ -83,18 +83,3 @@ databaseChangeLog:
               - column:
                   name: questionnumber
                   type: int
-
-  - changeSet:
-      id: 3
-      author: pollmaster
-      comment: "init"
-      changes:
-        - insert:
-            tableName: polls
-            columns:
-              - column:
-                  name: name
-                  value: "firstpoll"
-              - column:
-                  name: active
-                  value: true
